@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Thymeleaf . Message</title>
+</head>
+<body>
+  <!-- 會代替後方資訊 -->
+  <div th:text="Thymeleaf百里香葉" >Sample(未渲染,直接執行時顯示)</div>
+  <div th:text="'Thymeleaf百里香葉(有空格)'" >Sample2(未渲染,直接執行時顯示)</div>
+  <img th:src="@{/images/person.png}" width="100" src="https://www.thymeleaf.org/images/thymeleaf.png">
+  <br/>
+  BMI(本地變數):
+  <div th:with="bmi=(60/((170/100)*(170/100)))">
+      <div th:text="${bmi}" >0.00</div>
+      BMI(內聯變數):[[${bmi}]]
+  </div>
+  <div th:text="${name}"></div>
+  <div th:text="${age}"></div> 
+  <!-- utext:忽略後端 Html 格式: -->
+  <div th:utext="${age}"></div>
+  [[${scores}]]<br/>
+  [[${#lists.size(scores)}]]<br/>
+  <div th:text="${#lists.size(scores)}"></div><br/>
+  Socre List :<br/>
+  <table border="1" width="50%">
+  <tr>
+   <th>序號</th><th>分數</th><th>通過分數(60)</th>
+   <th>結果1</th>
+   <th>結果2</th>
+  </tr>
+  <tr th:each="score , status : ${scores}">
+   <td th:text="${status.index +1}"></td>
+   <td th:text="${score}"></td>
+   <td th:text="${(score>60)?'V':''}"></td>
+   <th th:if="${score>=60}">Pass</th>
+   <th th:unless="${score>=60}">Fail</th>
+   <td th:switch="${score>=60}">
+       <span th:case="true">及格</span>
+       <span th:case="false">不及格</span>
+   </td>
+  </tr>  
+  </table>
+</body>
+</html>
